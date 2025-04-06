@@ -1,22 +1,25 @@
 <html>
 
 <title>Graphique</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://d3js.org/d3.v4.js"></script>
+<script src="jquery.min.js.téléchargement"></script>
 
 <body>
     <div id="fire_forest"></div>
     <script>
-
         const margin = { top: 20, right: 30, bottom: 40, left: 40 },
-            width = 500 - margin.left - margin.right,
+          width = 500 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
-        const svg = d3.select("feu_forets").append("svg")
+        // Génération d'un élément de type graphique svg, positionnement, et définition de la taille
+        const svg = d3.select("#mongraphique1").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        // Chargement des données CSV
         d3.csv("feu_forets.csv").then(function (data) {
             // Convertir les données en nombres pour "part1" et "part2"
             data.forEach(d => {
@@ -24,7 +27,7 @@
                 d.part2 = +d.part2;
             });
 
-            // Set up the scales
+            // Définition des échelles
             const x = d3.scaleBand()
                 .domain(data.map(d => d.category))
                 .range([0, width])
@@ -39,11 +42,13 @@
                 .domain(["part1", "part2"])
                 .range(["#1f77b4", "#ff7f0e"]);
 
+            // Empilement des données
             const stack = d3.stack()
                 .keys(["part1", "part2"]);
 
             const stackedData = stack(data);
 
+            // Ajout des barres avec tooltip
             svg.selectAll(".layer")
                 .data(stackedData)
                 .enter().append("g")
@@ -56,16 +61,19 @@
                 .attr("y", d => y(d[1]))
                 .attr("height", d => y(d[0]) - y(d[1]))
                 .attr("width", x.bandwidth())
+                // Ajouter un événement de survol pour afficher le tooltip
                 .on("mouseover", function (event, d) {
                     tooltip.transition().duration(50).style("opacity", .9); // Rendre le tooltip visible
                     tooltip.html(`${d.data.category}<br>Bleu : ${d.data.part1}<br>Orange : ${d.data.part2}`)
                         .style("left", (event.pageX + 5) + "px") // Positionner à côté du curseur
                         .style("top", (event.pageY - 28) + "px");
                 })
+                // Ajouter un événement de sortie pour masquer le tooltip
                 .on("mouseout", function () {
                     tooltip.transition().duration(50).style("opacity", 0); // Masquer le tooltip
                 });
 
+            // Ajout des axes x et y
             svg.append("g")
                 .attr("class", "axis x-axis")
                 .attr("transform", `translate(0,${height})`)
