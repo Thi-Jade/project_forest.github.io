@@ -5,79 +5,80 @@
 
 <body>
     <div id="fire_forest"></div>
+    <script>
 
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 },
-    width = 500 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+        const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+            width = 500 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
-    const svg = d3.select("#mongraphique1").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+        const svg = d3.select("#mongraphique1").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    d3.csv("URL DU FICHIER CSV").then(function(data) {
-    // Convertir les données en nombres pour "part1" et "part2"
-    data.forEach(d => {
-    d.part1 = +d.part1;
-    d.part2 = +d.part2;
-    });
+        d3.csv("https://github.com/Thi-Jade/project_forest.github.io/blob/main/donnees/feu_forets.csv").then(function (data) {
+            // Convertir les données en nombres pour "part1" et "part2"
+            data.forEach(d => {
+                d.part1 = +d.part1;
+                d.part2 = +d.part2;
+            });
 
-    // Set up the scales
-    const x = d3.scaleBand()
-    .domain(data.map(d => d.category))
-    .range([0, width])
-    .padding(0.1);
+            // Set up the scales
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.category))
+                .range([0, width])
+                .padding(0.1);
 
-    const y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.part1 + d.part2)])
-    .nice()
-    .range([height, 0]);
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.part1 + d.part2)])
+                .nice()
+                .range([height, 0]);
 
-    const color = d3.scaleOrdinal()
-    .domain(["part1", "part2"])
-    .range(["#1f77b4", "#ff7f0e"]);
+            const color = d3.scaleOrdinal()
+                .domain(["part1", "part2"])
+                .range(["#1f77b4", "#ff7f0e"]);
 
-    const stack = d3.stack()
-    .keys(["part1", "part2"]);
+            const stack = d3.stack()
+                .keys(["part1", "part2"]);
 
-    const stackedData = stack(data);
+            const stackedData = stack(data);
 
-    svg.selectAll(".layer")
-    .data(stackedData)
-    .enter().append("g")
-    .attr("class", "layer")
-    .attr("fill", d => color(d.key))
-    .selectAll("rect")
-    .data(d => d)
-    .enter().append("rect")
-    .attr("x", d => x(d.data.category))
-    .attr("y", d => y(d[1]))
-    .attr("height", d => y(d[0]) - y(d[1]))
-    .attr("width", x.bandwidth())
-    .on("mouseover", function(event, d) {
-    tooltip.transition().duration(50).style("opacity", .9); // Rendre le tooltip visible
-    tooltip.html(`${d.data.category}<br>Bleu : ${d.data.part1}<br>Orange : ${d.data.part2}`)
-    .style("left", (event.pageX + 5) + "px") // Positionner à côté du curseur
-    .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mouseout", function() {
-    tooltip.transition().duration(50).style("opacity", 0); // Masquer le tooltip
-    });
+            svg.selectAll(".layer")
+                .data(stackedData)
+                .enter().append("g")
+                .attr("class", "layer")
+                .attr("fill", d => color(d.key))
+                .selectAll("rect")
+                .data(d => d)
+                .enter().append("rect")
+                .attr("x", d => x(d.data.category))
+                .attr("y", d => y(d[1]))
+                .attr("height", d => y(d[0]) - y(d[1]))
+                .attr("width", x.bandwidth())
+                .on("mouseover", function (event, d) {
+                    tooltip.transition().duration(50).style("opacity", .9); // Rendre le tooltip visible
+                    tooltip.html(`${d.data.category}<br>Bleu : ${d.data.part1}<br>Orange : ${d.data.part2}`)
+                        .style("left", (event.pageX + 5) + "px") // Positionner à côté du curseur
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function () {
+                    tooltip.transition().duration(50).style("opacity", 0); // Masquer le tooltip
+                });
 
-    svg.append("g")
-    .attr("class", "axis x-axis")
-    .attr("transform", `translate(0,${height})`)
-    .call(d3.axisBottom(x));
+            svg.append("g")
+                .attr("class", "axis x-axis")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
 
-    svg.append("g")
-    .attr("class", "axis y-axis")
-    .call(d3.axisLeft(y));
+            svg.append("g")
+                .attr("class", "axis y-axis")
+                .call(d3.axisLeft(y));
 
-    }).catch(function(error) {
-    console.error('Erreur lors du chargement du fichier CSV : ', error);
-    });
-
+        }).catch(function (error) {
+            console.error('Erreur lors du chargement du fichier CSV : ', error);
+        });
+    </script>
 </body>
 
 </html>
