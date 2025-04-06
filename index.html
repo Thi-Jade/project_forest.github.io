@@ -20,7 +20,7 @@
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
             // Chargement des données CSV
-            d3.csv("feu_forets.csv").then(function (data) {
+            d3.csv("feu_forets.csv").then(function(data) {
                 // Convertir les données en nombres pour "part1" et "part2"
                 data.forEach(d => {
                     d.part1 = +d.part1;
