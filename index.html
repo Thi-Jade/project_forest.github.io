@@ -11,13 +11,13 @@
             width = 500 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
-        const svg = d3.select("#mongraphique1").append("svg")
+        const svg = d3.select("feu_forets").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        d3.csv("https://github.com/Thi-Jade/project_forest.github.io/blob/main/donnees/feu_forets.csv").then(function (data) {
+        d3.csv("feu_forets.csv").then(function (data) {
             // Convertir les données en nombres pour "part1" et "part2"
             data.forEach(d => {
                 d.part1 = +d.part1;
