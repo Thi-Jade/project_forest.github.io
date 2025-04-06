@@ -22,6 +22,8 @@
 
 <body>
     <div id="fire_forest">
+        <div class="tooltip" id="tooltip"></div>
+
         <script>
             const margin = { top: 20, right: 30, bottom: 40, left: 40 },
                 width = 500 - margin.left - margin.right,
@@ -34,6 +36,8 @@
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
+            const tooltip = d3.select("#tooltip");
+            
             // Chargement des données CSV
             d3.csv("feu_forets.csv").then(function (data) {
                 // Convertir les données en nombres pour "part1" et "part2"
