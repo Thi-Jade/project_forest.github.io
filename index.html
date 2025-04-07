@@ -43,13 +43,13 @@
             d3.csv("feu_forets.csv").then(function (data) {
                 // Convertir les données en nombres pour "part1" et "part2"
                 data.forEach(d => {
-                    d.part1 = +d.part1;
-                    d.part2 = +d.part2;
+                    d.part1 = +d["region_mediterraneenne"];
+                    d.part2 = +d["reste_france"];
                 });
 
                 // Définition des échelles
                 const x = d3.scaleBand()
-                    .domain(data.map(d => d.category))
+                    .domain(data.map(d => d["annee"]))
                     .range([0, width])
                     .padding(0.1);
 
