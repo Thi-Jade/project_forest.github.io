@@ -41,6 +41,8 @@ body
   .topnav {
     overflow: hidden;
     background-color: #252422;
+    position: fixed;
+    width: 98.7%;
   }
   
   /*mise en forme des liens de la barre de navigation*/
@@ -58,5 +60,12 @@ body
     background-color: #786b55;
     color: #ffffff;
     text-decoration: none;
+  }
+
+  .opening {
+    background-color: rgb(255, 255, 255,0.6);
+    padding: 10px 10px;
+    width: 50%;
+
   }
   
