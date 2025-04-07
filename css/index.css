@@ -1,0 +1,60 @@
+body
+{ background-image: url("../images/site-mythique-VTT-terres-noires-flou.jpg")
+  }
+
+/* mise en forme de l'en-tête */
+.header {
+    padding: 270px;
+    text-align: center;
+    background-image: url("../images/site-mythique-VTT-terres-noires.jpg");
+    background-size: cover
+  }
+
+  .header h1 {
+    font-size: 40px;
+  }
+  
+.button {
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    color: rgb(255, 255, 255); 
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+
+  .button:hover {
+    background-color: rgba(120, 107, 85, 0.5);
+    color: white;
+  }
+
+  /* mise en forme de la barre de navigation*/
+  .topnav {
+    overflow: hidden;
+    background-color: #252422;
+  }
+  
+  /*mise en forme des liens de la barre de navigation*/
+  .topnav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 17px;
+    text-decoration: none;
+  }
+  
+  /* changer la couleur de la barre de navigation au survol */
+  .topnav a:hover {
+    background-color: #786b55;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  

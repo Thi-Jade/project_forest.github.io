@@ -1,113 +1,28 @@
 <html>
 
 <head>
-    <title>Graphique</title>
-    <script src="https://d3js.org/d3.v7.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <style>
-        /* Style pour le tooltip */
-        .tooltip {
-            position: absolute;
-            text-align: center;
-            padding: 8px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            border-radius: 4px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-    </style>
+    <!-- relier au css et donner un titre d'onglet -->
+    <link rel="stylesheet" types="text/css" href="../css/index.css">
+    <title>Accueil</title>
+    <link rel="icon" type="image/x-icon" href="/images/forest.png">
 </head>
 
 <body>
-    <div id="fire_forest">
-        <div class="tooltip" id="tooltip"></div>
+    <!-- créer une barre de navigation -->
+    <div class="topnav">
+        <a href="../index.html">Accueil</a>
+        <a href="./forest_fr.html">Les forêts du territoire</a>
+        <a href="./forest_rc.html">Forêts et réchauffement climatique</a>
+        <a href="./reference.html">Références</a>
+    </div>
 
-        <script>
-            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
-                width = 500 - margin.left - margin.right,
-                height = 300 - margin.top - margin.bottom;
-
-            // Génération d'un élément de type graphique svg, positionnement, et définition de la taille
-            const svg = d3.select("#fire_forest").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-            const tooltip = d3.select("#tooltip");
-
-            // Chargement des données CSV
-            d3.csv("feu_forets.csv").then(function(data) {
-                // Convertir les données en nombres pour "part1" et "part2"
-                data.forEach(d => {
-                    d.part1 = +d["region_mediterraneenne"];
-                    d.part2 = +d["reste_france"];
-                    d.catgory = d["annees"];
-                });
-
-                // Définition des échelles
-                const x = d3.scaleBand()
-                    .domain(data.map(d => d.catgory))
-                    .range([0, width])
-                    .padding(0.1);
-
-                const y = d3.scaleLinear()
-                    .domain([0, d3.max(data, d => d.part1 + d.part2)])
-                    .nice()
-                    .range([height, 0]);
-
-                const color = d3.scaleOrdinal()
-                    .domain(["part1", "part2"])
-                    .range(["#1f77b4", "#ff7f0e"]);
-
-                // Empilement des données
-                const stack = d3.stack()
-                    .keys(["part1", "part2"]);
-
-                const stackedData = stack(data);
-
-                // Ajout des barres avec tooltip
-                svg.selectAll(".layer")
-                    .data(stackedData)
-                    .enter().append("g")
-                    .attr("class", "layer")
-                    .attr("fill", d => color(d.key))
-                    .selectAll("rect")
-                    .data(d => d)
-                    .enter().append("rect")
-                    .attr("x", d => x(d.data.category))
-                    .attr("y", d => y(d[1]))
-                    .attr("height", d => y(d[0]) - y(d[1]))
-                    .attr("width", x.bandwidth())
-                    // Ajouter un événement de survol pour afficher le tooltip
-                    .on("mouseover", function (event, d) {
-                        tooltip.transition().duration(50).style("opacity", .9); // Rendre le tooltip visible
-                        tooltip.html(`${d.data.category}<br>Bleu : ${d.data.part1}<br>Orange : ${d.data.part2}`)
-                            .style("left", (event.pageX + 5) + "px") // Positionner à côté du curseur
-                            .style("top", (event.pageY - 28) + "px");
-                    })
-                    // Ajouter un événement de sortie pour masquer le tooltip
-                    .on("mouseout", function () {
-                        tooltip.transition().duration(50).style("opacity", 0); // Masquer le tooltip
-                    });
-
-                // Ajout des axes x et y
-                svg.append("g")
-                    .attr("class", "axis x-axis")
-                    .attr("transform", `translate(0,${height})`)
-                    .call(d3.axisBottom(x));
-
-                svg.append("g")
-                    .attr("class", "axis y-axis")
-                    .call(d3.axisLeft(y));
-
-            }).catch(function (error) {
-                console.error('Erreur lors du chargement du fichier CSV : ', error);
-            });
-        </script>
+    <!-- créer un en-tête -->
+    <div class="header">
+        <strong>
+            <h1 style="color:rgb(255, 255, 255);">Les forêts face au changement climatique</h1>
+            <h3 style="color:rgb(255, 255, 255);">Entre risque et résilience</h3>
+        </strong>
+        <a href="./html/forest_fr.html"><button class="button">Welcome !</button></a>
     </div>
 </body>
 
