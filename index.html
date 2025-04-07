@@ -2,7 +2,7 @@
 
 <head>
     <title>Graphique</title>
-    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://d3js.org/d3.v7.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
@@ -40,7 +40,7 @@
             const tooltip = d3.select("#tooltip");
 
             // Chargement des données CSV
-            d3.csv("feu_forets.csv").then(function (data) {
+            d3.csv("feu_forets.csv").then(function(data) {
                 // Convertir les données en nombres pour "part1" et "part2"
                 data.forEach(d => {
                     d.part1 = +d["region_mediterraneenne"];
