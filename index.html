@@ -1,24 +1,26 @@
 <html>
 
-<title>Graphique</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="./index.html/d3.v7.min.js.téléchargement"></script>
-<script src="./index.html/jquery.min.js.téléchargement"></script>
+<head>
+    <title>Graphique</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="./index.html/d3.v7.min.js.téléchargement"></script>
+    <script src="./index.html/jquery.min.js.téléchargement"></script>
 
-<style>
-    /* Style pour le tooltip */
-    .tooltip {
-        position: absolute;
-        text-align: center;
-        padding: 8px;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        border-radius: 4px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.2s;
-    }
-</style>
+    <style>
+        /* Style pour le tooltip */
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
 
 <body>
     <div id="fire_forest">
@@ -37,9 +39,9 @@
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
             const tooltip = d3.select("#tooltip");
-            
+
             // Chargement des données CSV
-            d3.csv("feu_forets.csv").then(function(data) {
+            d3.csv("feu_forets.csv").then(function (data) {
                 // Convertir les données en nombres pour "part1" et "part2"
                 data.forEach(d => {
                     d.part1 = +d.part1;
