@@ -2,7 +2,7 @@
 
 <head>
     <title>Graphique</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3.v7.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
@@ -45,11 +45,12 @@
                 data.forEach(d => {
                     d.part1 = +d["region_mediterraneenne"];
                     d.part2 = +d["reste_france"];
+                    d.catgory = d["annees"];
                 });
 
                 // Définition des échelles
                 const x = d3.scaleBand()
-                    .domain(data.map(d => d["annee"]))
+                    .domain(data.map(d => d.catgory))
                     .range([0, width])
                     .padding(0.1);
 
