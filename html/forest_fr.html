@@ -5,7 +5,16 @@
     <link rel="stylesheet" types="text/css" href="../css/forest_fr.css">
     <title>Accueil</title>
     <link rel="icon" type="image/x-icon" href="/images/sapin.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" >
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"> </script>
+    <script type='text/javascript' src='../donnees/dpt_bois.json'> </script>
 </head>
+<style>
+    #bois {
+        height: 140%;
+        width: 70%;
+    }
+</style>
 
 <body>
     <div class="header">
@@ -19,3 +28,37 @@
         <a href="./forest_rc.html">Forêts et réchauffement climatique</a>
         <a href="./references.html">Références</a>
     </div>
+
+    <h1>Taux de boisement par département</h1>
+    <div id="bois"></div>
+    <script>
+        var mymap = L.map('bois', { center: [46.85198039474376, 2.405353850075529], zoom: 5.5 });
+        var baselayers = {
+            ESRI: new L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+            OSM: new L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'),
+            OSM_voyager: new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png')
+        };
+        baselayers.ESRI.addTo(mymap);
+        L.control.layers(baselayers, null, { position: 'topright' }, { collapsed: false }).addTo(mymap);
+
+        function style(feature) {
+            return {
+                weight: 0.5,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.9,
+                fillColor: getColor(feature.properties.t_bois)
+            };
+        }
+
+        var geojson = L.geoJson(dpt_bois,
+            {
+                style: style,
+                onEachFeature: onEachFeature
+            })
+            .addTo(mymap);
+    </script>
+</body>
+
+</html>
