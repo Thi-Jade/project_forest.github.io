@@ -1,5 +1,6 @@
 body
-{ background-image: url("../images/site-mythique-VTT-terres-noires-flou.jpg")
+{ background-image: url("../images/site-mythique-VTT-terres-noires-flou.jpg");
+  background-size: cover
   }
 
 /* mise en forme de l'en-tête */

@@ -5,13 +5,13 @@
     <link rel="stylesheet" types="text/css" href="../css/forest_fr.css">
     <title>Accueil</title>
     <link rel="icon" type="image/x-icon" href="/images/sapin.png">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" >
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"> </script>
-    <script type='text/javascript' src='../donnees/dpt_bois.json'> </script>
+    <script type='text/javascript' src='../donnees/dpt_bois_reproject.json'> </script>
 </head>
 <style>
     #bois {
-        height: 140%;
+        height: 130%;
         width: 70%;
     }
 </style>
@@ -30,8 +30,17 @@
     </div>
 
     <h1>Taux de boisement par département</h1>
+
+    </br>
+
     <div id="bois"></div>
+
+    <button onclick=fullScreenView()>Vue en plein écran</button>
+
+
+
     <script>
+
         var mymap = L.map('bois', { center: [46.85198039474376, 2.405353850075529], zoom: 5.5 });
         var baselayers = {
             ESRI: new L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
@@ -41,23 +50,143 @@
         baselayers.ESRI.addTo(mymap);
         L.control.layers(baselayers, null, { position: 'topright' }, { collapsed: false }).addTo(mymap);
 
+        L.control.scale({ position: 'bottomleft' }).addTo(mymap);
+
+        var north = L.control({ position: "bottomleft" });
+        north.onAdd = function (map) {
+            var div = L.DomUtil.create("div", "lgd");
+            div.innerHTML = '<img src="boussole.png">';
+            return div;
+        }
+        north.addTo(mymap);
+
+        var geojson = L.geoJson(boisement,
+            {
+                style: style,
+                onEachFeature: onEachFeature
+            })
+            .addTo(mymap);
+
         function style(feature) {
             return {
                 weight: 0.5,
                 opacity: 1,
                 color: 'white',
                 dashArray: '3',
-                fillOpacity: 0.9,
+                fillOpacity: 0.8,
                 fillColor: getColor(feature.properties.t_bois)
             };
         }
 
-        var geojson = L.geoJson(dpt_bois,
-            {
-                style: style,
-                onEachFeature: onEachFeature
-            })
+        function getColor(d) {
+            return d > 45 ? '#15210D' :
+                d > 35 ? '#353C1A' :
+                    d > 25 ? '#605D30' :
+                        d > 15 ? '#92864A' :
+                            '#AAA28D';
+        }
+
+        var legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 15, 25, 35, 45],
+                labels = ["<strong> Taux de boisement <br></strong>(%)"],
+                from, to;
+            for (var i = 0; i < grades.length; i++) {
+                from = grades[i];
+                to = grades[i + 1];
+                labels.push(
+                    '<i style="background:' + getColor(from + 1) + '"></i> ' +
+                    from + (to ? ' à ' + to : ' et plus'));
+            }
+            div.innerHTML = labels.join('<br/><br/>');
+            return div;
+        };
+
+        legend.addTo(mymap);
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            this._div.innerHTML = '<h4>Statistiques du territoire</h4>' + (props ?
+                '<b>Département : <br>' + props.nom + '</b><br><br>' + 'Superficie : ' + props.surface + ' km<sup>2 '
+                + '</b><br />' + 'Taux de boisement : ' + props.t_bois.toFixed(1) + ' % '
+                : 'Survoler un département');
+        };
+
+        info.addTo(mymap);
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 3,
+                color: '#ffffff',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+
+            info.update(layer.feature.properties);
+        }
+
+        var geojson;
+
+        function resetHighlight(e) {
+            geojson.resetStyle(e.target);
+            info.update();
+        }
+
+        function zoomToFeature(e) {
+            mymap.fitBounds(e.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
+
+        var pe = document.getElementById('bois');
+        function fullScreenView() {
+            pe.requestFullscreen();
+        }
+
+        var forestIcon = L.icon({
+            iconUrl: 'arbre.png',
+            iconSize: [30, 30], // size of the icon
+        });
+
+        var customOptions = { 'maxWidth': '300', 'className': 'custom' }
+
+        var me = L.marker([44.8558333, 6.2636111111111115], { icon: forestIcon, title: "Forêt de montagne" })
+            .bindPopup("<h3>Forêt de montagne</h3><p>forêt du parc national des Écrins</p><img src='../images/ecrins.jpg' width=100%/>", customOptions)
             .addTo(mymap);
+
+        var lg = L.marker([44.172617416484016, -1.29558524335313], { icon: forestIcon, title: "Forêt de littoral" })
+            .bindPopup("<h3>Forêt de littoral</h3><p>forêt dunaire des Landes de Gascogne</p><img src='../images/landes.jpg' width=100%/>", customOptions)
+            .addTo(mymap);
+
+        var cpgn = L.marker([49.3980556, 2.8730555555555557], { icon: forestIcon, title: "Forêt de plaine" })
+            .bindPopup("<h3>Forêt de plaine</h3><p>forêt de Compiègne</p><img src='../images/compiegne.jpg' width=100%/>", customOptions)
+            .addTo(mymap);
+
+        var cv = L.marker([42.1283333, 9.140277777777778], { icon: forestIcon, title: "Forêt de montagne" })
+            .bindPopup("<h3>Forêt de plaine</h3><p>forêt de Vizzavona</p><img src='../images/vizzavona.jpg' width=100%/>", customOptions)
+            .addTo(mymap);
+
     </script>
 </body>
 
