@@ -1,3 +1,8 @@
+body {
+    background-image: url("../images/terres-noires-tour-des-baronnies-provencales-flou.jpg");
+    background-size: cover
+}
+
 /* mise en forme de l'en-tête */
 .header {
     padding: 85px;
@@ -5,35 +10,36 @@
     background-image: url("../images/terres-noires-tour-des-baronnies-provencales.jpg");
     background-position: 0px -300px;
     background-size: cover
-  }
+}
 
-  .header h1 {
+.header h1 {
     font-size: 37px;
-  }
+}
 
-  /* mise en forme de la barre de navigation*/
-  .topnav {
+/* mise en forme de la barre de navigation*/
+.topnav {
     overflow: hidden;
     background-color: #252422;
-  }
-  
-  /*mise en forme des liens de la barre de navigation*/
-  .topnav a {
+}
+
+/*mise en forme des liens de la barre de navigation*/
+.topnav a {
     float: left;
     display: block;
     color: white;
     text-align: center;
     padding: 15px 17px;
     text-decoration: none;
-  }
-  
-  /* changer la couleur de la barre de navigation au survol */
-  .topnav a:hover {
+}
+
+/* changer la couleur de la barre de navigation au survol */
+.topnav a:hover {
     background-color: #786b55;
     color: #ffffff;
     text-decoration: none;
-  }
+}
 
-  .flourish{
+.flourish {
     width: 70%;
-  }
+    background-color: #ffffff;
+}
