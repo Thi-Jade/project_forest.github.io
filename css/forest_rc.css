@@ -1,6 +1,7 @@
 body {
     background-image: url("../images/terres-noires-tour-des-baronnies-provencales-flou.jpg");
-    background-size: cover
+    background-size: cover;
+    margin: 0;
 }
 
 /* mise en forme de l'en-tête */
@@ -40,6 +41,9 @@ body {
 }
 
 .flourish {
-    width: 70%;
+    width: 65%;
     background-color: #ffffff;
+    margin: 1%;
+    padding: 1%;
+    float: left;
 }

@@ -1,16 +1,19 @@
 /* mise en forme de l'en-tête */
+body {
+  background-image: url("../images/pic_midi_flou.jpg");
+  background-size: cover;
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+}
+
 .header {
     padding: 85px;
     text-align: center;
-    background-image: url("../images/bivouac-aiguilles-de-la-pennaz-contamines.jpg");
-    background-position: 0px -350px;
+    background-image: url("../images/pic_midi.jpg");
+    background-position: 0px -90px;
     background-size: cover
   }
-
-  .header h1 {
-    font-size: 37px;
-  }
-
+  
   /* mise en forme de la barre de navigation*/
   .topnav {
     overflow: hidden;
@@ -34,7 +37,123 @@
     text-decoration: none;
   }
 
-  .info { padding: 6px 8px; font: 17px/20px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.7); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
+  .title{
+    text-align: center;
+    width: 70%;
+    position:relative;
+  }
+
+  .info { padding: 6px 8px; font: 15px/17px 'Times New Roman', Times, serif; background: white; background: rgba(255,255,255,0.7); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
   .info h4 { margin: 0 0 5px; color: #777; }
   .legend { text-align: left; line-height: 20px; color: #555; }
   .legend i { width: 20px; height: 20px; float: left; margin-right: 8px; opacity: 0.7; }
+
+  .button {
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 17px;
+    margin: 1%;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  .rightcolumn {
+    float: right;
+    width: 25%;
+    background-color: #ffffff;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding-left: 21px;
+    padding-right: 21px;
+    padding-bottom: 21px;
+  }
+
+  .imgfirst {
+    background-image: url("../images/cap-corse-09.jpg");
+    background-size: cover;
+    width: 100%;
+    height:200px;
+
+  }
+
+  .imgtwo {
+    background-image: url("../images/fontainebleau.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 200px;
+  }
+
+  .around {
+    background-color: white;
+    padding: 21px;
+    margin-top: 21px;
+  }
+  
+  
+  /* retirer les flottants après les colonnes */
+  .row::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .imgfirst h5 {
+    margin-bottom:-10%;
+  }
+  .imgfirst p {
+    font-size: 11px;
+  }
+
+  .imgtwo p {
+    font-size: 11px;
+  }
+
+  .imgtwo h5 {
+    margin-bottom:-10%;
+  }
+
+  
+br {
+  content: "";
+  display: block;
+  margin-bottom: 1em;
+ }
+
+ .infogram-embed {
+  margin: 1%;
+ }
+
+ .infographie{
+  text-align: center;
+ }
+
+ .copyrights {
+  padding: 10px 10px;
+  text-align: center;
+  background-color: #252422;
+  text-decoration: none;
+}
+
+.copyrights a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.copyrights a:hover {
+  color: #b3a895;
+  text-decoration: none;
+}
