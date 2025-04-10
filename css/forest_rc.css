@@ -115,3 +115,49 @@ br {
   display: block;
   margin-bottom: 2em;
  }
+
+ .lecture{
+  text-align: center;
+  padding: 1%;
+}
+
+.climat {
+  float: left;
+  width: 49%;
+}
+
+.climat img:hover {
+  border-image:space;
+  border-style:solid;
+  border-color:#ffffff;
+}
+
+.adaptation {
+  float: right;
+  width: 49%;
+}
+
+.adaptation img:hover {
+  border-image:space;
+  border-style:solid;
+  border-color:#ffffff;
+  outline-offset: -5px;
+}
+
+.copyrights {
+  padding: 10px 10;
+  text-align: center;
+  background-color: #252422;
+  text-decoration: none;
+}
+
+.copyrights a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.copyrights a:hover {
+  color: #b3a895;
+  text-decoration: none;
+}
+

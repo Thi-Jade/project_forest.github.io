@@ -141,8 +141,36 @@ br {
   text-align: center;
  }
 
- .copyrights {
-  padding: 10px 10px;
+.lecture{
+  text-align: center;
+  padding: 1%;
+}
+
+.memento {
+  float: left;
+  width: 49%;
+}
+
+.memento img:hover {
+  border-image:space;
+  border-style:solid;
+  border-color:#ffffff;
+}
+
+.ongules {
+  float: right;
+  width: 49%;
+}
+
+.ongules img:hover {
+  border-image:space;
+  border-style:solid;
+  border-color:#ffffff;
+  outline-offset: -5px;
+}
+
+.copyrights {
+  padding: 10px 10;
   text-align: center;
   background-color: #252422;
   text-decoration: none;
@@ -157,3 +185,5 @@ br {
   color: #b3a895;
   text-decoration: none;
 }
+
+
