@@ -1,3 +1,21 @@
+/* mise en page réactive : pour écrans de moins de 700 px de largeur, les colonnes s'empilent les unes sur les autres */
+@media screen and (max-width: 700px) {
+
+  .card,
+  .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+/* pour écrans de moins de 400 px de largeur, les liens de navigation s'empilent les unes sur les autres */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
 body {
     background-image: url("../images/terres-noires-tour-des-baronnies-provencales-flou.jpg");
     background-size: cover;
